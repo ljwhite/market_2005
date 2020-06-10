@@ -9,6 +9,7 @@ class VendorTest < Minitest::Test
   def setup
     @vendor = Vendor.new("Rocky Mountain Fresh")
     @item1 = Item.new({name: 'Peach', price: "$0.75"})
+    @item2 = Item.new({name: 'Tomato', price: '$0.50'})
   end
 
   def test_it_exists
@@ -38,6 +39,15 @@ class VendorTest < Minitest::Test
     expected = {@item1 => 55,
                 @item2 => 12}
     actual = @vendor.inventory
-    assert_equal expected, actual 
+    assert_equal expected, actual
+  end
+
+  def test_it_can_find_potential_revenue
+    @vendor.stock(@item1, 10)
+    @vendor.stock(@item2, 10)
+
+    actual = @vendor.potential_revenue
+    expected = 12.50
+    assert_equal expected, actual
   end
 end

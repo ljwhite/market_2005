@@ -16,4 +16,11 @@ class Vendor
   def stock(item, quantity)
     inventory[item] += quantity
   end
+
+  def potential_revenue
+    hash = inventory.transform_keys do |item|
+      item.price.delete '$'
+    end
+    hash.sum {|k,v| k.to_f * v }
+  end
 end
